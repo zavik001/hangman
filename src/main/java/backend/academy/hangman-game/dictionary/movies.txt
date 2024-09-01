@@ -1,0 +1,17 @@
+Movie
+Actor
+Scene
+Story
+Director
+
+Comedy
+Drama
+Thriller
+Documentary
+Animation
+
+Screenplay
+Cinematography
+Premiere
+Box office
+Independent film
