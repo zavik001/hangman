@@ -1,0 +1,20 @@
+# Level 1
+Dog: A common domestic animal, known for loyalty.
+Cat: A small, domesticated carnivorous mammal, often kept as a pet.
+Fish: An aquatic animal that breathes through gills.
+Bird: An animal that has feathers and wings, and most can fly.
+Cow: A large domestic animal that gives milk.
+
+# Level 2
+Elephant: The largest land animal with a trunk.
+Giraffe: The tallest land animal with a long neck.
+Monkey: A primate known for its agility and intelligence.
+Rabbit: A small mammal with long ears and a fluffy tail.
+Tiger: A large carnivorous feline with stripes.
+
+# Level 3
+Hippopotamus: A large, mostly herbivorous mammal, often found in rivers.
+Chimpanzee: A highly intelligent primate, closely related to humans.
+Ostrich: The largest bird that cannot fly but runs fast.
+Rhinoceros: A large mammal with one or two horns on its snout.
+Alligator: A large reptile similar to a crocodile.

@@ -1,0 +1,20 @@
+# Level 1
+Movie: A film that tells a story through moving images and sound.
+Actor: A person who performs in movies or theater.
+Scene: A segment of a film or play where specific actions take place.
+Story: The narrative or plot of a movie or book.
+Director: The person responsible for overseeing the creative aspects of a film.
+
+# Level 2
+Comedy: A genre of film that aims to entertain and amuse through humor.
+Drama: A genre of film that focuses on realistic and emotional storytelling.
+Thriller: A genre of film designed to create suspense and excitement.
+Documentary: A genre of film that provides a factual account of real events.
+Animation: A genre of film that uses animated images to tell a story.
+
+# Level 3
+Screenplay: The script of a film, including dialogue and instructions for actors.
+Cinematography: The art and technique of capturing visual images for film.
+Premiere: The first public showing of a film.
+Box office: The commercial reception of a film, measured by ticket sales.
+Independent film: A film produced outside of the major studio system, often with a lower budget.

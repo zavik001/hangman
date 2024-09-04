@@ -1,0 +1,20 @@
+# Level 1
+Football: A team sport where players aim to score goals by kicking a ball into the opposing team's net.
+Basketball: A team sport where players aim to score points by shooting a ball through a hoop.
+Tennis: A racquet sport where players hit a ball over a net to win points.
+Swim: The act of moving through water using one's limbs.
+Run: The activity of moving swiftly on foot.
+
+# Level 2
+Archery: A sport involving shooting arrows with a bow at a target.
+Fencing: A sport where players use swords to score points by hitting their opponent.
+Triathlon: An endurance competition consisting of swimming, cycling, and running.
+Snowboarding: A sport where individuals descend snowy slopes on a single board.
+Synchronized swimming: A sport where swimmers perform synchronized routines in water.
+
+# Level 3
+Taekwondo: A Korean martial art known for its high, fast kicks and jumping and spinning kicks.
+Surfing: A sport where participants ride waves on a special board while standing.
+Lacrosse: A team sport where players use long sticks with nets to catch, carry, and shoot a ball into the opponent's goal.
+Paragliding: An air sport where participants glide through the air using a lightweight, non-motorized parachute.
+Bobsleigh: A winter sport in which teams of two or four descend a narrow, winding, and icy track in a specially designed sled.

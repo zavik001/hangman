@@ -1,0 +1,20 @@
+# Level 1
+Apple: A popular fruit known for its sweet taste and crunchiness.
+Banana: A long, yellow fruit that is sweet and soft inside.
+Carrot: An orange root vegetable known for its crunchiness and health benefits.
+Grape: A small, round fruit that can be red, green, or purple.
+Potato: A starchy tuber used in a variety of dishes.
+
+# Level 2
+Pineapple: A tropical fruit with a spiky exterior and sweet, tangy flesh.
+Broccoli: A green vegetable known for its tree-like appearance and health benefits.
+Strawberry: A red, juicy fruit with a sweet flavor and tiny seeds on its surface.
+Cucumber: A green, refreshing vegetable often used in salads.
+Spinach: A leafy green vegetable known for its nutritional value.
+
+# Level 3
+Pomegranate: A fruit with a tough outer skin and many juicy, red seeds inside.
+Zucchini: A green summer squash that is versatile in cooking.
+Eggplant: A purple vegetable with a spongy texture and mild flavor.
+Artichoke: A green, spiky vegetable with edible leaves and heart.
+Asparagus: A green vegetable with long, tender stalks known for its distinct flavor.
