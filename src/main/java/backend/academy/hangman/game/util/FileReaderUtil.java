@@ -1,20 +1,24 @@
 package backend.academy.hangman.game.util;
 
 import backend.academy.hangman.game.wordprovider.WordWithHint;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileReaderUtil {
+public final class FileReaderUtil {
+
+    private FileReaderUtil() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
     public static List<List<WordWithHint>> readWordsWithHints(String filePath) throws IOException {
         List<List<WordWithHint>> levels = new ArrayList<>();
         List<WordWithHint> currentLevel = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
@@ -31,7 +35,7 @@ public class FileReaderUtil {
                         String hint = parts[1].trim();
                         currentLevel.add(new WordWithHint(word, hint));
                     } else {
-                        System.err.println("Invalid format: " + line); 
+                        System.err.println("Invalid format: " + line);
                     }
                 }
             }

@@ -1,30 +1,28 @@
 package backend.academy.hangman.game;
 
-import backend.academy.hangman.game.Game;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import backend.academy.hangman.game.wordprovider.WordProvider;
 import backend.academy.hangman.game.wordprovider.WordWithHint;
 import backend.academy.hangman.ui.UserInputOutput;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 public class GameTest {
 
     private Game game;
 
-    @Mock
-    private UserInputOutput mockUI;
+    @Mock private UserInputOutput mockUI;
 
-    @Mock
-    private WordProvider mockWordProvider;
+    @Mock private WordProvider mockWordProvider;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this); 
+        MockitoAnnotations.openMocks(this);
         game = new Game(mockUI, mockWordProvider);
     }
 
@@ -36,10 +34,7 @@ public class GameTest {
         WordWithHint wordWithHint = new WordWithHint("cat", "This is a pet");
         when(mockWordProvider.getRandomWordWithHint()).thenReturn(wordWithHint);
 
-        when(mockUI.readLetterInput())
-            .thenReturn('c')  
-            .thenReturn('a')  
-            .thenReturn('t'); 
+        when(mockUI.readLetterInput()).thenReturn('c').thenReturn('a').thenReturn('t');
 
         game.start();
 
@@ -55,12 +50,12 @@ public class GameTest {
         when(mockWordProvider.getRandomWordWithHint()).thenReturn(wordWithHint);
 
         when(mockUI.readLetterInput())
-            .thenReturn('x')  
-            .thenReturn('y')  
-            .thenReturn('z')  
-            .thenReturn('w')  
-            .thenReturn('v') 
-            .thenReturn('u'); 
+                .thenReturn('x')
+                .thenReturn('y')
+                .thenReturn('z')
+                .thenReturn('w')
+                .thenReturn('v')
+                .thenReturn('u');
 
         game.start();
 
@@ -85,7 +80,7 @@ public class GameTest {
     public void testStartGameRandomDifficultyWhenNoInput() {
         when(mockUI.readWordInput()).thenReturn("animals");
 
-        when(mockUI.readNumberInput()).thenReturn(-1); 
+        when(mockUI.readNumberInput()).thenReturn(-1);
 
         WordWithHint wordWithHint = new WordWithHint("dog", "This is a pet");
         when(mockWordProvider.getRandomWordWithHint()).thenReturn(wordWithHint);

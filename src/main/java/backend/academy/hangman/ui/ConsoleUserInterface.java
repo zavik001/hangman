@@ -4,18 +4,32 @@ import backend.academy.hangman.game.Constants;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConsoleUserInterface implements UserInputOutput {
 
+    private static final Logger LOGGER = LogManager.getLogger(ConsoleUserInterface.class);
     private final BufferedReader reader;
 
     public ConsoleUserInterface() {
-        this.reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader tempReader = null;
+        try {
+            tempReader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            LOGGER.error("Failed to initialize BufferedReader.", e);
+        }
+        this.reader = (tempReader != null)
+            ? tempReader
+            : new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
     }
 
     public ConsoleUserInterface(BufferedReader reader) {
-        this.reader = reader;
+        this.reader = (reader != null)
+            ? reader
+            : new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
     }
 
     @Override
@@ -26,63 +40,78 @@ public class ConsoleUserInterface implements UserInputOutput {
             } else {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
+            LOGGER.info("Console cleared successfully.");
         } catch (IOException | InterruptedException e) {
-            System.out.println("Failed to clear console.");
-            e.printStackTrace();
+            LOGGER.error("Failed to clear console.", e);
         }
     }
 
     @Override
     public String readWordInput() {
-        System.out.print(Constants.MESSAGE_COLON);
+        LOGGER.info(Constants.MESSAGE_COLON);
         try {
-            String input = reader.readLine().trim();
+            String input = reader.readLine();
+            if (input == null) {
+                return " ";
+            }
+            input = input.trim();
+            LOGGER.info("User input: {}", input);
             return input.isEmpty() ? " " : input.toLowerCase();
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to read word input.", e);
             return " ";
         }
     }
 
     @Override
     public int readNumberInput() {
-        System.out.print(Constants.MESSAGE_COLON);
+        LOGGER.info(Constants.MESSAGE_COLON);
         try {
-            String input = reader.readLine().trim();
+            String input = reader.readLine();
+            if (input == null) {
+                return 0;
+            }
+            input = input.trim();
+            LOGGER.info("User number input: {}", input);
             if (input.isEmpty() || !input.matches("\\d+")) {
                 return 0;
             }
             return Integer.parseInt(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to read number input.", e);
             return -1;
         }
     }
 
     @Override
     public char readLetterInput() {
-        System.out.print(Constants.MESSAGE_COLON);
+        LOGGER.info(Constants.MESSAGE_COLON);
         try {
-            String input = reader.readLine().trim();
-            if (input.isEmpty()) {
+            String input = reader.readLine();
+            if (input == null || input.isEmpty()) {
                 return ' ';
             }
+            input = input.trim();
+            LOGGER.info("User letter input: {}", input);
             return Character.toLowerCase(input.charAt(0));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Failed to read letter input.", e);
             return ' ';
         }
     }
 
     @Override
     public void showMessage(CharSequence message) {
-        System.out.println(message);
+        LOGGER.info("Message: {}", message);
     }
 
-    public void showCategoriesMessage(String[] categories) {
-        for (String cat : categories) {
-            System.out.print(cat + " ");
+    @Override
+    public void showListMessage(List<String> wordCategories) {
+        if (wordCategories == null || wordCategories.isEmpty()) {
+            LOGGER.info("No categories available.");
+            return;
         }
-        System.out.println();
+        String categories = String.join(" ", wordCategories);
+        LOGGER.info("Categories: {}", categories);
     }
 }

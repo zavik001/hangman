@@ -1,7 +1,8 @@
 package backend.academy.hangman.game.wordprovider;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class WordWithHintTest {
 

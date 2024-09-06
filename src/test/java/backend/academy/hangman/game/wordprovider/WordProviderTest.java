@@ -1,9 +1,9 @@
 package backend.academy.hangman.game.wordprovider;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class WordProviderTest {
 
@@ -17,7 +17,9 @@ class WordProviderTest {
     @Test
     void testValidCategoryAndDifficulty() {
         wordProvider.validateAndSetOptions("animals", 2);
-        assertDoesNotThrow(() -> wordProvider.getRandomWordWithHint(), "Should not throw exception for valid options");
+        assertDoesNotThrow(
+                () -> wordProvider.getRandomWordWithHint(),
+                "Should not throw exception for valid options");
     }
 
     @Test
@@ -25,17 +27,25 @@ class WordProviderTest {
         wordProvider.validateAndSetOptions("invalidCategory", 1);
         WordWithHint wordWithHint = wordProvider.getRandomWordWithHint();
         assertNotNull(wordWithHint, "WordWithHint should not be null for invalid category");
-        assertEquals("invalid", wordWithHint.getWord(), "Word should be invalid for invalid category");
-        assertEquals("No hint available, please enter invalid and try again", wordWithHint.getHint(), "Hint should be 'No hint available' for invalid category");
+        assertEquals(
+                "invalid", wordWithHint.getWord(), "Word should be invalid for invalid category");
+        assertEquals(
+                "No hint available, please enter invalid and try again",
+                wordWithHint.getHint(),
+                "Hint should be 'No hint available' for invalid category");
     }
 
     @Test
     void testInvalidDifficulty() {
-        wordProvider.validateAndSetOptions("animals", 4); 
+        wordProvider.validateAndSetOptions("animals", 4);
         WordWithHint wordWithHint = wordProvider.getRandomWordWithHint();
         assertNotNull(wordWithHint, "WordWithHint should not be null for invalid difficulty");
-        assertEquals("invalid", wordWithHint.getWord(), "Word should be invalid for invalid difficulty");
-        assertEquals("No hint available, please enter invalid and try again", wordWithHint.getHint(), "Hint should be 'No hint available' for invalid difficulty");
+        assertEquals(
+                "invalid", wordWithHint.getWord(), "Word should be invalid for invalid difficulty");
+        assertEquals(
+                "No hint available, please enter invalid and try again",
+                wordWithHint.getHint(),
+                "Hint should be 'No hint available' for invalid difficulty");
     }
 
     @Test
@@ -43,7 +53,8 @@ class WordProviderTest {
         wordProvider.validateAndSetOptions("", 2);
         WordWithHint wordWithHint = wordProvider.getRandomWordWithHint();
         assertNotNull(wordWithHint, "WordWithHint should not be null for empty category");
-        assertNotEquals("", wordWithHint.getWord(), "Random category should be chosen, not empty string");
+        assertNotEquals(
+                "", wordWithHint.getWord(), "Random category should be chosen, not empty string");
     }
 
     @Test
@@ -51,6 +62,7 @@ class WordProviderTest {
         wordProvider.validateAndSetOptions("animals", 0);
         WordWithHint wordWithHint = wordProvider.getRandomWordWithHint();
         assertNotNull(wordWithHint, "WordWithHint should not be null for zero difficulty");
-        assertNotEquals("", wordWithHint.getWord(), "Word should be obtained with valid difficulty");
+        assertNotEquals(
+                "", wordWithHint.getWord(), "Word should be obtained with valid difficulty");
     }
 }
