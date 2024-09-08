@@ -1,6 +1,7 @@
 package backend.academy.hangman;
 
 import backend.academy.hangman.game.Game;
+import backend.academy.hangman.game.constants.GameSettings;
 import backend.academy.hangman.game.wordprovider.FileWordProvider;
 import backend.academy.hangman.ui.ConsoleUserInterface;
 
@@ -12,7 +13,7 @@ public final class Main {
 
     public static void main(String[] args) {
         ConsoleUserInterface userInterface = new ConsoleUserInterface();
-        FileWordProvider wordProvider = new FileWordProvider();
+        FileWordProvider wordProvider = new FileWordProvider(GameSettings.DICTIONARY_FILE_PATH);
         Game game = new Game(userInterface, wordProvider);
         game.start();
     }

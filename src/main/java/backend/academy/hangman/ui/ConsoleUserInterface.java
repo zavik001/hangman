@@ -1,35 +1,39 @@
 package backend.academy.hangman.ui;
 
-import backend.academy.hangman.game.Constants;
+import backend.academy.hangman.game.constants.Messages;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
-public class ConsoleUserInterface implements UserInputOutput {
+@Slf4j
+public class ConsoleUserInterface implements UserInterface {
 
-    private static final Logger LOGGER = LogManager.getLogger(ConsoleUserInterface.class);
     private final BufferedReader reader;
 
     public ConsoleUserInterface() {
         BufferedReader tempReader = null;
         try {
-            tempReader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+            tempReader =
+                    new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         } catch (Exception e) {
-            LOGGER.error("Failed to initialize BufferedReader.", e);
+            log.error("Failed to initialize BufferedReader. ", e);
         }
-        this.reader = (tempReader != null)
-            ? tempReader
-            : new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        this.reader =
+                (tempReader != null)
+                        ? tempReader
+                        : new BufferedReader(
+                                new InputStreamReader(System.in, StandardCharsets.UTF_8));
     }
 
     public ConsoleUserInterface(BufferedReader reader) {
-        this.reader = (reader != null)
-            ? reader
-            : new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        this.reader =
+                (reader != null)
+                        ? reader
+                        : new BufferedReader(
+                                new InputStreamReader(System.in, StandardCharsets.UTF_8));
     }
 
     @Override
@@ -40,78 +44,78 @@ public class ConsoleUserInterface implements UserInputOutput {
             } else {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
-            LOGGER.info("Console cleared successfully.");
         } catch (IOException | InterruptedException e) {
-            LOGGER.error("Failed to clear console.", e);
+            log.error("Failed to clear console.", e);
         }
     }
 
     @Override
     public String readWordInput() {
-        LOGGER.info(Constants.MESSAGE_COLON);
+        log.info("Waiting for word input from the user{}", Messages.MESSAGE_COLON);
         try {
             String input = reader.readLine();
             if (input == null) {
                 return " ";
             }
             input = input.trim();
-            LOGGER.info("User input: {}", input);
+            log.info("User input: {}", input);
             return input.isEmpty() ? " " : input.toLowerCase();
         } catch (IOException e) {
-            LOGGER.error("Failed to read word input.", e);
+            log.error("Failed to read word input.", e);
             return " ";
         }
     }
 
     @Override
     public int readNumberInput() {
-        LOGGER.info(Constants.MESSAGE_COLON);
+        log.info("Waiting for number input from the user{}", Messages.MESSAGE_COLON);
         try {
             String input = reader.readLine();
-            if (input == null) {
+            if (input == null || input.trim().isEmpty()) {
                 return 0;
             }
             input = input.trim();
-            LOGGER.info("User number input: {}", input);
-            if (input.isEmpty() || !input.matches("\\d+")) {
-                return 0;
+            log.info("User number input: {}", input);
+            if (input.matches("\\d+") && Integer.parseInt(input) > 0) {
+                    return Integer.parseInt(input);
+            } else {
+                return -1;
             }
-            return Integer.parseInt(input);
         } catch (IOException e) {
-            LOGGER.error("Failed to read number input.", e);
+            log.error("Failed to read number input.", e);
             return -1;
         }
     }
 
     @Override
     public char readLetterInput() {
-        LOGGER.info(Constants.MESSAGE_COLON);
+        log.info("Waiting for letter input from the user{}", Messages.MESSAGE_COLON);
         try {
             String input = reader.readLine();
             if (input == null || input.isEmpty()) {
                 return ' ';
             }
             input = input.trim();
-            LOGGER.info("User letter input: {}", input);
+            log.info("User letter input: {}", input);
             return Character.toLowerCase(input.charAt(0));
         } catch (IOException e) {
-            LOGGER.error("Failed to read letter input.", e);
+            log.error("Failed to read letter input.", e);
             return ' ';
         }
     }
 
     @Override
     public void showMessage(CharSequence message) {
-        LOGGER.info("Message: {}", message);
+        log.info("Message: {}", message);
     }
 
     @Override
     public void showListMessage(List<String> wordCategories) {
         if (wordCategories == null || wordCategories.isEmpty()) {
-            LOGGER.info("No categories available.");
+            log.info("No categories available.");
             return;
         }
         String categories = String.join(" ", wordCategories);
-        LOGGER.info("Categories: {}", categories);
+        log.info("Categories: {}", categories);
     }
 }

@@ -1,0 +1,119 @@
+{
+    "categories": {
+      "animals": {
+        "1": [
+          {"word": "Dog", "hint": "A common domestic animal, known for loyalty."},
+          {"word": "Cat", "hint": "A small, domesticated carnivorous mammal, often kept as a pet."},
+          {"word": "Fish", "hint": "An aquatic animal that breathes through gills."},
+          {"word": "Bird", "hint": "An animal that has feathers and wings, and most can fly."},
+          {"word": "Cow", "hint": "A large domestic animal that gives milk."}
+        ],
+        "2": [
+          {"word": "Elephant", "hint": "The largest land animal with a trunk."},
+          {"word": "Giraffe", "hint": "The tallest land animal with a long neck."},
+          {"word": "Monkey", "hint": "A primate known for its agility and intelligence."},
+          {"word": "Rabbit", "hint": "A small mammal with long ears and a fluffy tail."},
+          {"word": "Tiger", "hint": "A large carnivorous feline with stripes."}
+        ],
+        "3": [
+          {"word": "Hippopotamus", "hint": "A large, mostly herbivorous mammal, often found in rivers."},
+          {"word": "Chimpanzee", "hint": "A highly intelligent primate, closely related to humans."},
+          {"word": "Ostrich", "hint": "The largest bird that cannot fly but runs fast."},
+          {"word": "Rhinoceros", "hint": "A large mammal with one or two horns on its snout."},
+          {"word": "Alligator", "hint": "A large reptile similar to a crocodile."}
+        ]
+      },
+      "countries": {
+        "1": [
+          {"word": "Russia", "hint": "A country known for its vast size and rich cultural history."},
+          {"word": "China", "hint": "The most populous country in the world with a rich history."},
+          {"word": "India", "hint": "Known for its diverse culture and as a major IT hub."},
+          {"word": "Brazil", "hint": "Famous for the Amazon rainforest and its Carnival festival."},
+          {"word": "Japan", "hint": "An island nation known for its technological advancements and culture."}
+        ],
+        "2": [
+          {"word": "Kazakhstan", "hint": "The largest landlocked country in the world."},
+          {"word": "Switzerland", "hint": "Known for its neutrality and banking system."},
+          {"word": "Argentina", "hint": "Famous for tango music and the Andes mountains."},
+          {"word": "Indonesia", "hint": "An archipelago with over 17,000 islands."},
+          {"word": "South Africa", "hint": "Known for its diverse wildlife and the city of Cape Town."}
+        ],
+        "3": [
+          {"word": "Germany", "hint": "Known for its influence on European culture and history."},
+          {"word": "France", "hint": "Famous for its cuisine, art, and the Eiffel Tower."},
+          {"word": "Italy", "hint": "Renowned for its historical sites and delicious cuisine."},
+          {"word": "Australia", "hint": "A country and continent known for its unique wildlife and Great Barrier Reef."},
+          {"word": "Mexico", "hint": "Known for its rich cultural heritage and vibrant traditions."}
+        ]
+      },
+      "fruits": {
+        "1": [
+          {"word": "Apple", "hint": "A popular fruit known for its sweet taste and crunchiness."},
+          {"word": "Banana", "hint": "A long, yellow fruit that is sweet and soft inside."},
+          {"word": "Carrot", "hint": "An orange root vegetable known for its crunchiness and health benefits."},
+          {"word": "Grape", "hint": "A small, round fruit that can be red, green, or purple."},
+          {"word": "Potato", "hint": "A starchy tuber used in a variety of dishes."}
+        ],
+        "2": [
+          {"word": "Pineapple", "hint": "A tropical fruit with a spiky exterior and sweet, tangy flesh."},
+          {"word": "Broccoli", "hint": "A green vegetable known for its tree-like appearance and health benefits."},
+          {"word": "Strawberry", "hint": "A red, juicy fruit with a sweet flavor and tiny seeds on its surface."},
+          {"word": "Cucumber", "hint": "A green, refreshing vegetable often used in salads."},
+          {"word": "Spinach", "hint": "A leafy green vegetable known for its nutritional value."}
+        ],
+        "3": [
+          {"word": "Pomegranate", "hint": "A fruit with a tough outer skin and many juicy, red seeds inside."},
+          {"word": "Zucchini", "hint": "A green summer squash that is versatile in cooking."},
+          {"word": "Eggplant", "hint": "A purple vegetable with a spongy texture and mild flavor."},
+          {"word": "Artichoke", "hint": "A green, spiky vegetable with edible leaves and heart."},
+          {"word": "Asparagus", "hint": "A green vegetable with long, tender stalks known for its distinct flavor."}
+        ]
+      },
+      "sports": {
+        "1": [
+          {"word": "Football", "hint": "A team sport where players aim to score goals by kicking a ball into the opposing team's net."},
+          {"word": "Basketball", "hint": "A team sport where players aim to score points by shooting a ball through a hoop."},
+          {"word": "Tennis", "hint": "A racquet sport where players hit a ball over a net to win points."},
+          {"word": "Swim", "hint": "The act of moving through water using one's limbs."},
+          {"word": "Run", "hint": "The activity of moving swiftly on foot."}
+        ],
+        "2": [
+          {"word": "Archery", "hint": "A sport involving shooting arrows with a bow at a target."},
+          {"word": "Fencing", "hint": "A sport where players use swords to score points by hitting their opponent."},
+          {"word": "Triathlon", "hint": "An endurance competition consisting of swimming, cycling, and running."},
+          {"word": "Snowboarding", "hint": "A sport where individuals descend snowy slopes on a single board."},
+          {"word": "Synchronized swimming", "hint": "A sport where swimmers perform synchronized routines in water."}
+        ],
+        "3": [
+          {"word": "Taekwondo", "hint": "A Korean martial art known for its high, fast kicks and jumping and spinning kicks."},
+          {"word": "Surfing", "hint": "A sport where participants ride waves on a special board while standing."},
+          {"word": "Lacrosse", "hint": "A team sport where players use long sticks with nets to catch, carry, and shoot a ball into the opponent's goal."},
+          {"word": "Paragliding", "hint": "An air sport where participants glide through the air using a lightweight, non-motorized parachute."},
+          {"word": "Bobsleigh", "hint": "A winter sport in which teams of two or four descend a narrow, winding, and icy track in a specially designed sled."}
+        ]
+      },
+      "movies": {
+        "1": [
+          {"word": "Movie", "hint": "A film that tells a story through moving images and sound."},
+          {"word": "Actor", "hint": "A person who performs in movies or theater."},
+          {"word": "Scene", "hint": "A segment of a film or play where specific actions take place."},
+          {"word": "Story", "hint": "The narrative or plot of a movie or book."},
+          {"word": "Director", "hint": "The person responsible for overseeing the creative aspects of a film."}
+        ],
+        "2": [
+          {"word": "Comedy", "hint": "A genre of film that aims to entertain and amuse through humor."},
+          {"word": "Drama", "hint": "A genre of film that focuses on realistic and emotional storytelling."},
+          {"word": "Thriller", "hint": "A genre of film designed to create suspense and excitement."},
+          {"word": "Documentary", "hint": "A genre of film that provides a factual account of real events."},
+          {"word": "Animation", "hint": "A genre of film that uses animated images to tell a story."}
+        ],
+        "3": [
+          {"word": "Screenplay", "hint": "The script of a film, including dialogue and instructions for actors."},
+          {"word": "Cinematography", "hint": "The art and technique of capturing visual images for film."},
+          {"word": "Premiere", "hint": "The first public showing of a film."},
+          {"word": "Box office", "hint": "The commercial reception of a film, measured by ticket sales."},
+          {"word": "Independent film", "hint": "A film produced outside of the major film studio system."}
+        ]
+      }
+    }
+  }

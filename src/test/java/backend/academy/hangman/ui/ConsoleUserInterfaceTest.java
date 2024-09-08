@@ -49,7 +49,7 @@ class ConsoleUserInterfaceTest {
         when(mockReader.readLine()).thenReturn("abc");
         ConsoleUserInterface consoleUI = new ConsoleUserInterface(mockReader);
         int result = consoleUI.readNumberInput();
-        assertThat(result).isEqualTo(0);
+        assertThat(result).isEqualTo(-1);
     }
 
     @Test

@@ -2,12 +2,10 @@ package backend.academy.hangman.game.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import backend.academy.hangman.game.wordprovider.WordWithHint;
-
+import backend.academy.hangman.game.wordprovider.CluedWord;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -16,9 +14,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("unused")
-class FileReaderUtilTest {
+class DictionaryFileReaderTest {
 
     private Path tempDir;
 
@@ -28,70 +27,45 @@ class FileReaderUtilTest {
     }
 
     @Test
-    void testReadWordsWithHints_validFile_shouldReturnCorrectData() throws IOException {
-        Path file =
-                createTempFileWithContent(
-                        "# Level 1\n"
-                                + "Dog: A common domestic animal, known for loyalty.\n"
-                                + "Cat: A small, domesticated carnivorous mammal, often kept as a pet.\n"
-                                + "\n"
-                                + "# Level 2\n"
-                                + "Elephant: The largest land animal with a trunk.\n"
-                                + "Giraffe: The tallest land animal with a long neck.\n");
+    void testReadDictionary_validFile_shouldReturnCorrectData() throws IOException {
+        Path file = createTempFileWithContent(
+                "{ \"categories\": { " +
+                "\"Animals\": { " +
+                "\"1\": [ { \"word\": \"Dog\", \"hint\": \"A common domestic animal, known for loyalty.\" }, " +
+                "{ \"word\": \"Cat\", \"hint\": \"A small, domesticated carnivorous mammal, often kept as a pet.\" } ], " +
+                "\"2\": [ { \"word\": \"Elephant\", \"hint\": \"The largest land animal with a trunk.\" }, " +
+                "{ \"word\": \"Giraffe\", \"hint\": \"The tallest land animal with a long neck.\" } ] " +
+                "} } }");
 
-        List<List<WordWithHint>> levels = FileReaderUtil.readWordsWithHints(file.toString());
+        Map<String, Map<Integer, List<CluedWord>>> dictionary = DictionaryFileReader.readDictionary(file.toString());
 
-        assertThat(levels).hasSize(2);
+        assertThat(dictionary).containsKey("Animals");
+        Map<Integer, List<CluedWord>> animalsLevels = dictionary.get("Animals");
 
-        assertThat(levels.get(0)).hasSize(2);
-        assertThat(levels.get(0).get(0).getWord()).isEqualTo("Dog");
-        assertThat(levels.get(0).get(0).getHint())
-                .isEqualTo("A common domestic animal, known for loyalty.");
-        assertThat(levels.get(0).get(1).getWord()).isEqualTo("Cat");
-        assertThat(levels.get(0).get(1).getHint())
-                .isEqualTo("A small, domesticated carnivorous mammal, often kept as a pet.");
+        assertThat(animalsLevels).hasSize(2);
 
-        assertThat(levels.get(1)).hasSize(2);
-        assertThat(levels.get(1).get(0).getWord()).isEqualTo("Elephant");
-        assertThat(levels.get(1).get(0).getHint())
-                .isEqualTo("The largest land animal with a trunk.");
-        assertThat(levels.get(1).get(1).getWord()).isEqualTo("Giraffe");
-        assertThat(levels.get(1).get(1).getHint())
-                .isEqualTo("The tallest land animal with a long neck.");
+        List<CluedWord> level1Words = animalsLevels.get(1);
+        assertThat(level1Words).hasSize(2);
+        assertThat(level1Words.get(0).word()).isEqualTo("Dog");
+        assertThat(level1Words.get(0).hint()).isEqualTo("A common domestic animal, known for loyalty.");
+        assertThat(level1Words.get(1).word()).isEqualTo("Cat");
+        assertThat(level1Words.get(1).hint()).isEqualTo("A small, domesticated carnivorous mammal, often kept as a pet.");
+
+        List<CluedWord> level2Words = animalsLevels.get(2);
+        assertThat(level2Words).hasSize(2);
+        assertThat(level2Words.get(0).word()).isEqualTo("Elephant");
+        assertThat(level2Words.get(0).hint()).isEqualTo("The largest land animal with a trunk.");
+        assertThat(level2Words.get(1).word()).isEqualTo("Giraffe");
+        assertThat(level2Words.get(1).hint()).isEqualTo("The tallest land animal with a long neck.");
     }
 
     @Test
-    void testReadWordsWithHints_invalidFormat_shouldHandleGracefully() throws IOException {
-        Path file =
-                createTempFileWithContent(
-                        "# Level 1\n"
-                                + "Dog A common domestic animal, known for loyalty.\n"
-                                + "Cat: A small, domesticated carnivorous mammal, often kept as a pet.\n"
-                                + "\n"
-                                + "# Level 2\n"
-                                + "Elephant The largest land animal with a trunk.\n");
-
-        List<List<WordWithHint>> levels = FileReaderUtil.readWordsWithHints(file.toString());
-
-        assertThat(levels).hasSize(2);
-
-        assertThat(levels.get(0)).hasSize(1);
-        assertThat(levels.get(0).get(0).getWord()).isEqualTo("Cat");
-        assertThat(levels.get(0).get(0).getHint())
-                .isEqualTo("A small, domesticated carnivorous mammal, often kept as a pet.");
-
-        assertThat(levels.get(1)).isEmpty();
-    }
-
-    @Test
-    void testReadWordsWithHints_nonExistingFile_shouldThrowIOException() {
-        assertThrows(
-                IOException.class,
-                () -> FileReaderUtil.readWordsWithHints("non_existing_file.txt"));
+    void testReadDictionary_invalidFile_shouldThrowIOException() {
+        assertThrows(IOException.class, () -> DictionaryFileReader.readDictionary("non_existing_file.json"));
     }
 
     private Path createTempFileWithContent(String content) throws IOException {
-        Path file = Files.createTempFile(tempDir, "test-file", ".txt");
+        Path file = Files.createTempFile(tempDir, "test-file", ".json");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file.toFile(), StandardCharsets.UTF_8))) {
             writer.write(content);
         }

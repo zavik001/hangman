@@ -1,92 +1,95 @@
 package backend.academy.hangman.game;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
+import static org.assertj.core.api.Assertions.*;
 import backend.academy.hangman.game.wordprovider.WordProvider;
-import backend.academy.hangman.game.wordprovider.WordWithHint;
-import backend.academy.hangman.ui.UserInputOutput;
-
+import backend.academy.hangman.game.wordprovider.CluedWord;
+import backend.academy.hangman.ui.UserInterface;
+import backend.academy.hangman.game.constants.Messages;
+import backend.academy.hangman.game.constants.GameSettings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class GameTest {
+import java.util.List;
+
+class GameTest {
 
     private Game game;
 
-    @Mock private UserInputOutput mockUI;
-
+    @Mock private UserInterface mockUI;
     @Mock private WordProvider mockWordProvider;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
         game = new Game(mockUI, mockWordProvider);
     }
 
     @Test
-    public void testStartGameWithCorrectGuesses() {
+    void testStartGameWithCorrectGuesses() {
+        when(mockWordProvider.getCategories()).thenReturn(List.of("animals"));
         when(mockUI.readWordInput()).thenReturn("animals");
+        when(mockWordProvider.getLevelsCount("animals")).thenReturn(3);
         when(mockUI.readNumberInput()).thenReturn(1);
 
-        WordWithHint wordWithHint = new WordWithHint("cat", "This is a pet");
-        when(mockWordProvider.getRandomWordWithHint()).thenReturn(wordWithHint);
+        CluedWord wordWithHint = new CluedWord("cat", "This is a pet");
+        when(mockWordProvider.getRandomWord("animals", 1)).thenReturn(wordWithHint);
 
-        when(mockUI.readLetterInput()).thenReturn('c').thenReturn('a').thenReturn('t');
+        when(mockUI.readLetterInput()).thenReturn('c', 'a', 't');
 
         game.start();
 
-        verify(mockUI).showMessage(Constants.MESSAGE_WIN);
+        verify(mockUI).showMessage(Messages.MESSAGE_WIN);
     }
 
     @Test
-    public void testStartGameWithIncorrectGuesses() {
+    void testStartGameWithIncorrectGuesses() {
+        when(mockWordProvider.getCategories()).thenReturn(List.of("animals"));
         when(mockUI.readWordInput()).thenReturn("animals");
+        when(mockWordProvider.getLevelsCount("animals")).thenReturn(3);
         when(mockUI.readNumberInput()).thenReturn(1);
 
-        WordWithHint wordWithHint = new WordWithHint("dog", "This is a pet");
-        when(mockWordProvider.getRandomWordWithHint()).thenReturn(wordWithHint);
+        CluedWord wordWithHint = new CluedWord("dog", "This is a pet");
+        when(mockWordProvider.getRandomWord("animals", 1)).thenReturn(wordWithHint);
 
-        when(mockUI.readLetterInput())
-                .thenReturn('x')
-                .thenReturn('y')
-                .thenReturn('z')
-                .thenReturn('w')
-                .thenReturn('v')
-                .thenReturn('u');
+        when(mockUI.readLetterInput()).thenReturn('x', 'y', 'z', 'w', 'v', 'u');
 
         game.start();
 
-        verify(mockUI).showMessage(Constants.MESSAGE_LOSS);
+        verify(mockUI).showMessage(Messages.MESSAGE_LOSS);
     }
 
     @Test
-    public void testStartGameRandomCategoryWhenNoInput() {
+    void testStartGameRandomCategoryWhenNoInput() {
+        when(mockWordProvider.getCategories()).thenReturn(List.of("animals"));
         when(mockUI.readWordInput()).thenReturn("");
-
+        when(mockWordProvider.getRandomCategory()).thenReturn("animals");
+        when(mockWordProvider.getLevelsCount("animals")).thenReturn(3);
         when(mockUI.readNumberInput()).thenReturn(1);
 
-        WordWithHint wordWithHint = new WordWithHint("cat", "This is a pet");
-        when(mockWordProvider.getRandomWordWithHint()).thenReturn(wordWithHint);
+        CluedWord wordWithHint = new CluedWord("cat", "This is a pet");
+        when(mockWordProvider.getRandomWord("animals", 1)).thenReturn(wordWithHint);
 
         game.start();
 
-        verify(mockWordProvider).validateAndSetOptions(anyString(), anyInt());
+        verify(mockWordProvider).getRandomCategory();
     }
 
     @Test
-    public void testStartGameRandomDifficultyWhenNoInput() {
+    void testStartGameRandomDifficultyWhenNoInput() {
+        when(mockWordProvider.getCategories()).thenReturn(List.of("animals"));
         when(mockUI.readWordInput()).thenReturn("animals");
+        when(mockWordProvider.getLevelsCount("animals")).thenReturn(3);
+        when(mockUI.readNumberInput()).thenReturn(0);
+        when(mockWordProvider.getRandomDifficulty("animals")).thenReturn(2);
 
-        when(mockUI.readNumberInput()).thenReturn(-1);
-
-        WordWithHint wordWithHint = new WordWithHint("dog", "This is a pet");
-        when(mockWordProvider.getRandomWordWithHint()).thenReturn(wordWithHint);
+        CluedWord wordWithHint = new CluedWord("dog", "This is a pet");
+        when(mockWordProvider.getRandomWord("animals", 2)).thenReturn(wordWithHint);
 
         game.start();
 
-        verify(mockWordProvider).validateAndSetOptions(anyString(), anyInt());
+        verify(mockWordProvider).getRandomDifficulty("animals");
     }
 }
