@@ -18,45 +18,42 @@ public final class DictionaryFileReader {
 
     public static Map<String, Map<Integer, List<CluedWord>>> readDictionary(String filePath)
             throws IOException {
-        Map<String, Map<Integer, List<CluedWord>>> dictionary = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(new File(filePath));
 
+        Map<String, Map<Integer, List<CluedWord>>> dictionary = new HashMap<>();
         JsonNode categoriesNode = rootNode.get("categories");
+
         if (categoriesNode != null) {
             categoriesNode
-                    .fieldNames()
-                    .forEachRemaining(
-                            category -> {
-                                Map<Integer, List<CluedWord>> levels = new HashMap<>();
-                                JsonNode categoryNode = categoriesNode.get(category);
-
-                                categoryNode
-                                        .fieldNames()
-                                        .forEachRemaining(
-                                                level -> {
-                                                    List<CluedWord> words = new ArrayList<>();
-                                                    JsonNode wordsNode = categoryNode.get(level);
-
-                                                    wordsNode.forEach(
-                                                            wordNode -> {
-                                                                String word =
-                                                                        wordNode.get("word")
-                                                                                .asText();
-                                                                String hint =
-                                                                        wordNode.get("hint")
-                                                                                .asText();
-                                                                words.add(
-                                                                        new CluedWord(word, hint));
-                                                            });
-
-                                                    int levelInt = Integer.parseInt(level);
-                                                    levels.put(levelInt, words);
-                                                });
-
-                                dictionary.put(category, levels);
-                            });
+                .fieldNames()
+                .forEachRemaining(category -> {
+                    JsonNode categoryNode = categoriesNode.get(category);
+                    dictionary.put(category, processCategoryNode(categoryNode));
+                });
         }
         return dictionary;
+    }
+
+    private static Map<Integer, List<CluedWord>> processCategoryNode(JsonNode categoryNode) {
+        Map<Integer, List<CluedWord>> levels = new HashMap<>();
+        categoryNode
+            .fieldNames()
+            .forEachRemaining(level -> {
+                int levelInt = Integer.parseInt(level);
+                JsonNode wordsNode = categoryNode.get(level);
+                levels.put(levelInt, processWordsNode(wordsNode));
+            });
+        return levels;
+    }
+
+    private static List<CluedWord> processWordsNode(JsonNode wordsNode) {
+        List<CluedWord> words = new ArrayList<>();
+        wordsNode.forEach(wordNode -> {
+            String word = wordNode.get("word").asText();
+            String hint = wordNode.get("hint").asText();
+            words.add(new CluedWord(word, hint));
+        });
+        return words;
     }
 }
