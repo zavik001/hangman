@@ -6,7 +6,9 @@ import backend.academy.hangman.game.constants.Messages;
 import backend.academy.hangman.game.wordprovider.CluedWord;
 import backend.academy.hangman.game.wordprovider.WordProvider;
 import backend.academy.hangman.ui.UserInterface;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Game {
     private final UserInterface userInterface;
@@ -31,7 +33,9 @@ public class Game {
         String hint = cluedWord.hint();
 
         StringBuilder finderWord = new StringBuilder("_".repeat(word.length()));
+        Set<Character> guessedLetters = new HashSet<>();
 
+        int result = -1;
         while (remainingAttempts > 0 && finderWord.indexOf("_") != -1) {
             userInterface.clearWindow();
             userInterface.showMessage(Messages.MESSAGE_REMAINING_ATTEMPTS + remainingAttempts);
@@ -43,9 +47,14 @@ public class Game {
                 userInterface.showMessage(Messages.MESSAGE_HINT + hint);
             }
 
+            if (result == 1) {
+                userInterface.showMessage(Messages.MESSAGE_ALREADY_ENTERED);
+            }
+
             char input = userInterface.readLetterInput();
-            int result = processGuess(input, word, finderWord);
-            if (result < 0) {
+
+            result = processGuess(input, word, finderWord, guessedLetters);
+            if (result == -1) {
                 remainingAttempts--;
             }
         }
@@ -56,7 +65,7 @@ public class Game {
                 (remainingAttempts <= 0) ? Messages.MESSAGE_LOSS : Messages.MESSAGE_WIN);
     }
 
-    private String selectValidCategory() {
+    String selectValidCategory() {
         String category;
         List<String> availableCategories = wordProvider.getCategories();
         do {
@@ -84,16 +93,26 @@ public class Game {
         return difficulty;
     }
 
-    private int processGuess(char input, String word, StringBuilder finderWord) {
+    private int processGuess(char input, String word, StringBuilder finderWord, Set<Character> guessedLetters) {
+        if (input == '\0') {
+            return 0;
+        }
+
+        boolean found = false;
         char lowerCaseInput = Character.toLowerCase(input);
         String lowerCaseWord = word.toLowerCase();
-        boolean found = false;
-        for (int i = 0; i < word.length(); i++) {
-            if (lowerCaseWord.charAt(i) == lowerCaseInput) {
-                finderWord.setCharAt(i, word.charAt(i));
-                found = true;
+
+        if (guessedLetters.contains(lowerCaseInput)) {
+            return 1;
+        } else {
+            guessedLetters.add(input);
+            for (int i = 0; i < word.length(); i++) {
+                if (lowerCaseWord.charAt(i) == lowerCaseInput) {
+                    finderWord.setCharAt(i, word.charAt(i));
+                    found = true;
+                }
             }
+            return found ? 0 : -1;
         }
-        return found ? 0 : -1;
     }
 }

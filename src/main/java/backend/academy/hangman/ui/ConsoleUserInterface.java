@@ -93,14 +93,14 @@ public class ConsoleUserInterface implements UserInterface {
         try {
             String input = reader.readLine();
             if (input == null || input.isEmpty()) {
-                return ' ';
+                return '\0';
             }
             input = input.trim();
             log.info("User letter input: {}", input);
             return Character.toLowerCase(input.charAt(0));
         } catch (IOException e) {
             log.error("Failed to read letter input.", e);
-            return ' ';
+            return '\0';
         }
     }
 
