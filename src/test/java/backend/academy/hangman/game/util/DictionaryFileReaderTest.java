@@ -1,13 +1,11 @@
 package backend.academy.hangman.game.util;
 
+import backend.academy.hangman.game.wordprovider.CluedWord;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import backend.academy.hangman.game.wordprovider.CluedWord;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,7 +14,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 class DictionaryFileReaderTest {
 
     private Path tempDir;
@@ -27,7 +24,7 @@ class DictionaryFileReaderTest {
     }
 
     @Test
-    void testReadDictionary_validFile_shouldReturnCorrectData() throws IOException {
+    void testReadDictionaryValidFileShouldReturnCorrectData() throws IOException {
         Path file = createTempFileWithContent(
                 "{ \"categories\": { " +
                 "\"Animals\": { " +
@@ -60,8 +57,27 @@ class DictionaryFileReaderTest {
     }
 
     @Test
-    void testReadDictionary_invalidFile_shouldThrowIOException() {
+    void testReadDictionaryInvalidFileShouldThrowIOException() {
         assertThrows(IOException.class, () -> DictionaryFileReader.readDictionary("non_existing_file.json"));
+    }
+
+    @Test
+    void testReadDictionaryEmptyFileShouldReturnEmptyMap() throws IOException {
+        Path file = createTempFileWithContent("{ \"categories\": {} }");
+
+        Map<String, Map<Integer, List<CluedWord>>> dictionary = DictionaryFileReader.readDictionary(file.toString());
+
+        assertThat(dictionary).isEmpty();
+    }
+
+    @Test
+    void testReadDictionaryMalformedFileShouldThrowIOException() throws IOException {
+        final Path file = createTempFileWithContent(
+            "{ \"categories\": { \"Animals\": { \"1\": [ { \"word\": \"Dog\", \"hint\": \"Loyal\" } }"
+            + " } }"
+        );
+
+        assertThrows(IOException.class, () -> DictionaryFileReader.readDictionary(file.toString()));
     }
 
     private Path createTempFileWithContent(String content) throws IOException {

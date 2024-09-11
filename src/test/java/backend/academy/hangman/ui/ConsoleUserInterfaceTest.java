@@ -67,7 +67,7 @@ class ConsoleUserInterfaceTest {
         when(mockReader.readLine()).thenReturn("");
         ConsoleUserInterface consoleUI = new ConsoleUserInterface(mockReader);
         char result = consoleUI.readLetterInput();
-        assertThat(result).isEqualTo(' ');
+        assertThat(result).isEqualTo('\0');
     }
 
     @Test
