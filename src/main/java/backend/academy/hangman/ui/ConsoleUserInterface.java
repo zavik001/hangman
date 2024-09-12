@@ -92,7 +92,7 @@ public class ConsoleUserInterface implements UserInterface {
         log.info("Waiting for letter input from the user{}", Messages.MESSAGE_COLON);
         try {
             String input = reader.readLine();
-            if (input == null || input.isEmpty()) {
+            if (input == null || input.trim().isEmpty()) {
                 return '\0';
             }
             input = input.trim();

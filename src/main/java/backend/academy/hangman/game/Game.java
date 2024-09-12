@@ -51,6 +51,10 @@ public class Game {
                 userInterface.showMessage(Messages.MESSAGE_ALREADY_ENTERED);
             }
 
+            if (result == 0) {
+                userInterface.showMessage(Messages.MESSAGE_ENTER_LETTER);
+            }
+
             char input = userInterface.readLetterInput();
 
             result = processGuess(input, word, finderWord, guessedLetters);
@@ -94,7 +98,7 @@ public class Game {
     }
 
     private int processGuess(char input, String word, StringBuilder finderWord, Set<Character> guessedLetters) {
-        if (input == '\0') {
+        if (input == '\0' || !(input >= 'a' && input <= 'z') && !(input >= 'A' && input <= 'Z')) {
             return 0;
         }
 

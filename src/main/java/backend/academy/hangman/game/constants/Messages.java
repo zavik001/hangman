@@ -12,4 +12,5 @@ public interface Messages {
     String MESSAGE_REMAINING_ATTEMPTS = "Remaining attempts: ";
     String MESSA_WAIT = "Waiting for user input: ";
     String MESSAGE_ALREADY_ENTERED = "This letter has already been entered ";
+    String MESSAGE_ENTER_LETTER = "Please enter a letter.";
 }
