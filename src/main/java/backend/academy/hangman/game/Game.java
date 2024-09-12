@@ -3,6 +3,7 @@ package backend.academy.hangman.game;
 import backend.academy.hangman.game.constants.GameSettings;
 import backend.academy.hangman.game.constants.HangmanStages;
 import backend.academy.hangman.game.constants.Messages;
+import backend.academy.hangman.game.constants.ResultCodes;
 import backend.academy.hangman.game.wordprovider.CluedWord;
 import backend.academy.hangman.game.wordprovider.WordProvider;
 import backend.academy.hangman.ui.UserInterface;
@@ -47,18 +48,18 @@ public class Game {
                 userInterface.showMessage(Messages.MESSAGE_HINT + hint);
             }
 
-            if (result == 1) {
+            if (result == ResultCodes.ALREADY_ENTERED) {
                 userInterface.showMessage(Messages.MESSAGE_ALREADY_ENTERED);
             }
 
-            if (result == 0) {
+            if (result == ResultCodes.INVALID_INPUT) {
                 userInterface.showMessage(Messages.MESSAGE_ENTER_LETTER);
             }
 
             char input = userInterface.readLetterInput();
 
             result = processGuess(input, word, finderWord, guessedLetters);
-            if (result == -1) {
+            if (result == ResultCodes.WRONG_GUESS) {
                 remainingAttempts--;
             }
         }
@@ -99,7 +100,7 @@ public class Game {
 
     private int processGuess(char input, String word, StringBuilder finderWord, Set<Character> guessedLetters) {
         if (input == '\0' || !(input >= 'a' && input <= 'z') && !(input >= 'A' && input <= 'Z')) {
-            return 0;
+            return ResultCodes.INVALID_INPUT;
         }
 
         boolean found = false;
@@ -107,7 +108,7 @@ public class Game {
         String lowerCaseWord = word.toLowerCase();
 
         if (guessedLetters.contains(lowerCaseInput)) {
-            return 1;
+            return ResultCodes.ALREADY_ENTERED;
         } else {
             guessedLetters.add(input);
             for (int i = 0; i < word.length(); i++) {
@@ -116,7 +117,7 @@ public class Game {
                     found = true;
                 }
             }
-            return found ? 0 : -1;
+            return found ? ResultCodes.CORRECT_GUESS : ResultCodes.WRONG_GUESS;
         }
     }
 }
